@@ -1,6 +1,6 @@
 var data = [];
 
-var m = 1;
+var m = 0;
 var b = 0;
 function setup(){
     createCanvas(400,400);
@@ -43,6 +43,20 @@ function linearRegression(){
     b = yaver - m * xaver;
 }
 
+function gradientDescent(){
+    var learning_rate = 0.5;
+
+    for(var i = 0;i<data.length;i++){
+        var x = data[i].x;
+        var y = data[i].y;
+        var guess = m * x + b;
+        var error = y - guess;
+        
+        m = m + (error * x) * learning_rate;
+        b = b + (error) * learning_rate;
+    }
+}
+
 function mousePressed(){
     var x = map(mouseX,0,width,0,1);
     var y = map(mouseY,0,height,1,0);
@@ -62,7 +76,7 @@ function draw(){
         ellipse(x, y, 8, 8);
     }
     if(data.length > 1){
-        linearRegression();
+        gradientDescent();
         drawLine();
     }
     
